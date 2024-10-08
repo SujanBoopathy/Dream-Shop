@@ -42,12 +42,12 @@ public class ProductService implements IProductService{
 
     @Override
     public List<Product> getAllProducts() {
-        return null;
+        return productRepository.findAll();
     }
 
     @Override
     public List<Product> getProductsByCategory(String category) {
-        return null;
+        return productRepository.findByCategory(category);
     }
 
     @Override
