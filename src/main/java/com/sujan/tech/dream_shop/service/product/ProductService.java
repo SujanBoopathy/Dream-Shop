@@ -13,6 +13,11 @@ public class ProductService implements IProductService{
     private ProductRepository productRepository;
     @Override
     public Product addProduct(Product product) {
+        //check if category is found in the DB
+        // If yes, set it as the new product category
+        // If no, then save it as a new category
+        // The set as the new product category.
+        Category category = Optional.ofNullable(null);
         return null;
     }
 
