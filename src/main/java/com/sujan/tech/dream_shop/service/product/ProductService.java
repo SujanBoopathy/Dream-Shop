@@ -17,7 +17,7 @@ public class ProductService implements IProductService{
         // If yes, set it as the new product category
         // If no, then save it as a new category
         // The set as the new product category.
-        Category category = Optional.ofNullable(null);
+        //Category category = Optional.ofNullable(categoryRepository.findByName(request.getCategory().getName()));
         return null;
     }
 
