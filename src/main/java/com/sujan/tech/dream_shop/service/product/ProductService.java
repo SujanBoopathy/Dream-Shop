@@ -28,7 +28,7 @@ public class ProductService implements IProductService{
                    Category newCategory = new Category(request.getCategory().getName());
                    return categoryRepository.save(newCategory);
                 });
-        return new Product();
+        return productRepository.save(createProduct(request,category));
     }
 
     private Product createProduct(AddProductRequest request,Category category){
