@@ -6,6 +6,7 @@ import com.sujan.tech.dream_shop.model.Product;
 import com.sujan.tech.dream_shop.repository.CategoryRepository;
 import com.sujan.tech.dream_shop.repository.ProductRepository;
 import com.sujan.tech.dream_shop.request.AddProductRequest;
+import com.sujan.tech.dream_shop.request.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +29,7 @@ public class ProductService implements IProductService{
                    Category newCategory = new Category(request.getCategory().getName());
                    return categoryRepository.save(newCategory);
                 });
+        request.setCategory(category);
         return productRepository.save(createProduct(request,category));
     }
 
@@ -57,8 +59,24 @@ public class ProductService implements IProductService{
     }
 
     @Override
-    public void updateProduct(Product product, Long productId) {
+    public Product updateProduct(ProductUpdateRequest request, Long productId) throws Exception{
+        return productRepository.findById(productId)
+                .map(existingProduct -> updateExistingProduct(existingProduct,request))
+                .map(productRepository :: save)
+                .orElseThrow(() -> new ProductNotFoundException(("Product Not Found")));
+    }
 
+    private Product updateExistingProduct(Product existingProduct, ProductUpdateRequest request){
+        existingProduct.setName(request.getName());
+        existingProduct.setBrand(request.getBrand());
+        existingProduct.setDescription(request.getDescription());
+        existingProduct.setPrice(request.getPrice());
+        existingProduct.setQuantity(request.getQuantity());
+
+        Category category = categoryRepository.findByName(request.getCategory().getName());
+        existingProduct.setCategory(category);
+
+        return  existingProduct;
     }
 
     @Override
