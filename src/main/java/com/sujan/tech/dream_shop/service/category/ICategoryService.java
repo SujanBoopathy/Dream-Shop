@@ -1,0 +1,15 @@
+package com.sujan.tech.dream_shop.service.category;
+
+import com.sujan.tech.dream_shop.model.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.List;
+
+public interface ICategoryService extends JpaRepository<Category,Long> {
+    Category getCategoryById(Long id);
+    Category getCategoryByName(String name);
+    List<Category> getAllCategories();
+    Category addCategory(Category category);
+    Category updateCategory(Category category);
+
+}
