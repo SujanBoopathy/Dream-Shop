@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
-public interface ICategoryService extends JpaRepository<Category,Long> {
+public interface ICategoryService {
     Category getCategoryById(Long id);
     Category getCategoryByName(String name);
     List<Category> getAllCategories();
