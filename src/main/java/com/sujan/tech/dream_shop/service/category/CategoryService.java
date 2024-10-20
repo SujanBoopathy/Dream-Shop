@@ -11,8 +11,8 @@ import java.util.List;
 public class CategoryService implements ICategoryService{
     private final CategoryRepository categoryRepository;
     @Override
-    public Category getCategoryById(Long id) {
-        return null;
+    public Category getCategoryById(Long id) throws Exception {
+        return categoryRepository.findById(id).orElseThrow(() -> new Exception("Unknown Category!"));
     }
 
     @Override

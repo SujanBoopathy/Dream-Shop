@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ICategoryService {
-    Category getCategoryById(Long id);
+    Category getCategoryById(Long id) throws Exception;
     Category getCategoryByName(String name);
     List<Category> getAllCategories();
     Category addCategory(Category category);
