@@ -9,7 +9,7 @@ public interface ICategoryService {
     Category getCategoryById(Long id) throws Exception;
     Category getCategoryByName(String name);
     List<Category> getAllCategories();
-    Category addCategory(Category category);
+    Category addCategory(Category category) throws Exception;
     Category updateCategory(Category category,Long id) throws Exception;
 
 }
