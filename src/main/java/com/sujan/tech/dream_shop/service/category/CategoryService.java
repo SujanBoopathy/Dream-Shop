@@ -42,4 +42,16 @@ public class CategoryService implements ICategoryService{
                 }                
         ).orElseThrow(() -> new Exception("Resource Not Found"));
     }
+
+    @Override
+    public void deleteCategoryById(Long id) throws Exception{
+        categoryRepository.findById(id)
+                .ifPresentOrElse(categoryRepository::delete,()->{
+                    try {
+                        throw new Exception("Category not found!");
+                    } catch (Exception e) {
+                        throw new RuntimeException(e);
+                    }
+                });
+    }
 }

@@ -11,5 +11,6 @@ public interface ICategoryService {
     List<Category> getAllCategories();
     Category addCategory(Category category) throws Exception;
     Category updateCategory(Category category,Long id) throws Exception;
+    void deleteCategoryById(Long id) throws Exception;
 
 }
