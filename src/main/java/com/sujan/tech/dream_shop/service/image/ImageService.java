@@ -7,12 +7,12 @@ public class ImageService implements IImageService{
     private final ImageRepository imageRepository;
     @Override
     public Image getImageById(Long id) {
-        return imageRepository.findById();
+        return imageRepository.findById(id);
     }
 
     @Override
     public void deleteImageById(Long id) {
-
+        return;
     }
 
     @Override
