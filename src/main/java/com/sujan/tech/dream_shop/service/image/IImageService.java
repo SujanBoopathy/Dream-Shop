@@ -4,7 +4,7 @@ import com.sujan.tech.dream_shop.model.Image;
 import org.springframework.web.multipart.MultipartFile;
 
 public interface IImageService {
-    Image getImageById(Long id);
+    Image getImageById(Long id) throws Exception;
     void deleteImageById(Long id);
     Image saveImage(MultipartFile file, Long productId);
     void updateImage(MultipartFile file,Long imageId);
