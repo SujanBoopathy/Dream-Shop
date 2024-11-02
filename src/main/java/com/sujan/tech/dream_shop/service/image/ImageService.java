@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class ImageService implements IImageService{
@@ -13,6 +15,10 @@ public class ImageService implements IImageService{
     @Override
     public Image getImageById(Long id) throws Exception {
         return imageRepository.findById(id).orElseThrow(() -> new Exception("Image not found"));
+    }
+
+    public List<Image> getAllImages(){
+        return imageRepository.findAll();
     }
 
     @Override
