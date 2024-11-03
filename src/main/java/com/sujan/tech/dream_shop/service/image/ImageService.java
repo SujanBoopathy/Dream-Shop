@@ -23,7 +23,7 @@ public class ImageService implements IImageService{
 
     @Override
     public void deleteImageById(Long id) {
-        return;
+        imageRepository.delete(imageRepository.findById(id));
     }
 
     @Override
