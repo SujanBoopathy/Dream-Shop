@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface IImageService {
     Image getImageById(Long id) throws Exception;
-    void deleteImageById(Long id);
+    void deleteImageById(Long id) throws Exception ;
     Image saveImage(MultipartFile file, Long productId);
     void updateImage(MultipartFile file,Long imageId);
     List<Image> getAllImages();

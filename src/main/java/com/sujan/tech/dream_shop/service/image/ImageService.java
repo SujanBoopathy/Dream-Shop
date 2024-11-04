@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.lang.reflect.Executable;
 import java.util.List;
 
 @Service
@@ -22,8 +23,14 @@ public class ImageService implements IImageService{
     }
 
     @Override
-    public void deleteImageById(Long id) {
-        imageRepository.delete(imageRepository.findById(id));
+    public void deleteImageById(Long id) throws Exception {
+        imageRepository.findById(id).ifPresentOrElse(imageRepository::delete,()-> {
+            try {
+                throw new Exception("Image not Found!");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
     }
 
     @Override
