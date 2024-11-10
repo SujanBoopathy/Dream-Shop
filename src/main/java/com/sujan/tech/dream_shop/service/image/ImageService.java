@@ -82,7 +82,7 @@ public class ImageService implements IImageService{
     }
 
     @Override
-    public void updateImage(MultipartFile file, Long imageId) {
+    public void updateImage(MultipartFile file, Long imageId) throws Exception {
         try{
             Image image = getImageById(imageId);
             image.setFileName(file.getOriginalFilename());
