@@ -34,7 +34,7 @@ public class ImageController {
         }
     }
 
-    public ResponseEntity<Resource> downloadImage(@PathVariable Long imageId) throws SQLException,Exception {
+    public ResponseEntity<Resource> downloadImage(@PathVariable Long imageId) throws Exception {
         Image image = imageService.getImageById(imageId);
         ByteArrayResource resource = new ByteArrayResource(image.getImage().getBytes(1,(int) image.getImage().length()));
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(image.getFileType()))
@@ -45,7 +45,7 @@ public class ImageController {
     public ResponseEntity<ApiResponse> updateImage(
             @PathVariable Long imageId,
             @RequestBody MultipartFile file
-    )  {
+    )  throws Exception {
         try{
             Image image = imageService.getImageById(imageId);
             if(image != null){
