@@ -20,6 +20,7 @@ import java.util.List;
 public class ImageController {
     private final IImageService imageService;
 
+    @PostMapping("/upload")
     public ResponseEntity<ApiResponse> saveImage(
             @RequestParam List<MultipartFile> files,
             @RequestParam Long productId
@@ -34,6 +35,7 @@ public class ImageController {
         }
     }
 
+    @GetMapping("/image/download/{imageId}")
     public ResponseEntity<Resource> downloadImage(@PathVariable Long imageId) throws Exception {
         Image image = imageService.getImageById(imageId);
         ByteArrayResource resource = new ByteArrayResource(image.getImage().getBytes(1,(int) image.getImage().length()));
@@ -60,5 +62,19 @@ public class ImageController {
        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                .body(new ApiResponse("Update failed",HttpStatus.INTERNAL_SERVER_ERROR));
 
+    }
+
+    @DeleteMapping("/image/{imageId}/delete")
+    public ResponseEntity<ApiResponse> deleteImage(@PathVariable Long imageId) {
+        try {
+            Image image = imageService.getImageById(imageId);
+            if(image != null) {
+                imageService.deleteImageById( imageId);
+                return ResponseEntity.ok(new ApiResponse("Delete success!", null));
+            }
+        } catch (Exception e) {
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+        }
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Delete failed!", HttpStatus.INTERNAL_SERVER_ERROR));
     }
 }
