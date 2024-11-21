@@ -6,16 +6,18 @@ import com.sujan.tech.dream_shop.service.category.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("${api.prefix}/category")
+@RequestMapping("${api.prefix}/categories")
 public class CategoryController {
     private final ICategoryService categoryService;
 
@@ -26,6 +28,16 @@ public class CategoryController {
             return  ResponseEntity.ok(new ApiResponse("Found!", categories));
         } catch (Exception e) {
            return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("Error:", INTERNAL_SERVER_ERROR));
+        }
+    }
+
+    @GetMapping("/category/{id}/category")
+    public ResponseEntity<ApiResponse> getCategoryById(@PathVariable Long id){
+        try {
+            Category theCategory = categoryService.getCategoryById(id);
+            return  ResponseEntity.ok(new ApiResponse("Found", theCategory));
+        } catch (Exception e) {
+            return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }
     }
 }
