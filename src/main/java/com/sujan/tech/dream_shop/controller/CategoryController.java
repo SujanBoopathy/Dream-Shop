@@ -5,15 +5,11 @@ import com.sujan.tech.dream_shop.respone.ApiResponse;
 import com.sujan.tech.dream_shop.service.category.ICategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
-import static org.springframework.http.HttpStatus.NOT_FOUND;
+import static org.springframework.http.HttpStatus.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -38,6 +34,16 @@ public class CategoryController {
             return  ResponseEntity.ok(new ApiResponse("Found", theCategory));
         } catch (Exception e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<ApiResponse> addCategory(@RequestBody Category name) {
+        try{
+            Category category = categoryService.addCategory(name);
+            return ResponseEntity.ok(new ApiResponse("Success",category));
+        } catch(Exception e){
+            return ResponseEntity.status(CONFLICT).body(new ApiResponse(e.getMessage(),null));
         }
     }
 }
