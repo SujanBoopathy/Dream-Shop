@@ -22,5 +22,10 @@ public class ProductController {
     List<Product> products = productService.getAllProducts();
     return ResponseEntity.ok(new ApiResponse("success",products));
   }
+
+  @GetMapping("product/{id}")
+  public ResponseEntity getProductById(@PathVariable id){
+    productService.getProductById(id);
+  }
   
 }
