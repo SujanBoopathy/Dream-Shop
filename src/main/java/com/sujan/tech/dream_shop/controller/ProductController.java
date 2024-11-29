@@ -24,8 +24,9 @@ public class ProductController {
   }
 
   @GetMapping("product/{id}")
-  public ResponseEntity getProductById(@PathVariable id){
-    productService.getProductById(id);
+  public ResponseEntity<ApiResponse> getProductById(@PathVariable id){
+      Product product = productService.getProductById(id);
+      return Response.ok(new ApiResponse("sucess",product));
   }
   
 }
