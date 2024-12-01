@@ -1,5 +1,6 @@
 package com.sujan.tech.dream_shop.controller;
 
+import com.sujan.tech.dream_shop.model.Category;
 import com.sujan.tech.dream_shop.model.Product;
 import com.sujan.tech.dream_shop.respone.ApiResponse;
 import com.sujan.tech.dream_shop.service.product.IProductService;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+
+import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,6 +37,16 @@ public class ProductController {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
               new ApiResponse("Invalid input",e.getMessage())
       );
+    }
+  }
+
+  @GetMapping("/{name}/product")
+  public ResponseEntity<ApiResponse> getCategoryByName(@PathVariable String name){
+    try{
+      List<Product> products = productService.getProductsByName(name);
+      return ResponseEntity.ok(new ApiResponse("Found",products));
+    } catch(Exception e){
+      return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
     }
   }
   
