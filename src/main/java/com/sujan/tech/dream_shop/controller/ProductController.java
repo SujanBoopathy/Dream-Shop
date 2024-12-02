@@ -2,18 +2,17 @@ package com.sujan.tech.dream_shop.controller;
 
 import com.sujan.tech.dream_shop.model.Category;
 import com.sujan.tech.dream_shop.model.Product;
+import com.sujan.tech.dream_shop.request.AddProductRequest;
 import com.sujan.tech.dream_shop.respone.ApiResponse;
 import com.sujan.tech.dream_shop.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RequiredArgsConstructor
@@ -47,6 +46,16 @@ public class ProductController {
       return ResponseEntity.ok(new ApiResponse("Found",products));
     } catch(Exception e){
       return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
+    }
+  }
+
+  @PostMapping("/add")
+  public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product) {
+    try {
+      Product theProduct = productService.addProduct(product);
+      return ResponseEntity.ok(new ApiResponse("Add product success!", product));
+    } catch (Exception e) {
+      return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
     }
   }
   
