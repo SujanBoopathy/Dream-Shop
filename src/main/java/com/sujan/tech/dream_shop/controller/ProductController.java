@@ -3,6 +3,7 @@ package com.sujan.tech.dream_shop.controller;
 import com.sujan.tech.dream_shop.model.Category;
 import com.sujan.tech.dream_shop.model.Product;
 import com.sujan.tech.dream_shop.request.AddProductRequest;
+import com.sujan.tech.dream_shop.request.ProductUpdateRequest;
 import com.sujan.tech.dream_shop.respone.ApiResponse;
 import com.sujan.tech.dream_shop.service.product.IProductService;
 import lombok.RequiredArgsConstructor;
@@ -56,6 +57,16 @@ public class ProductController {
       return ResponseEntity.ok(new ApiResponse("Add product success!", product));
     } catch (Exception e) {
       return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
+    }
+  }
+
+  @PutMapping("/product/{productId}/update")
+  public  ResponseEntity<ApiResponse> updateProduct(@RequestBody ProductUpdateRequest request, @PathVariable Long productId) {
+    try {
+      Product product = productService.updateProduct(request, productId);
+      return ResponseEntity.ok(new ApiResponse("Update product success!", product));
+    } catch (Exception e) {
+      return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
     }
   }
   
