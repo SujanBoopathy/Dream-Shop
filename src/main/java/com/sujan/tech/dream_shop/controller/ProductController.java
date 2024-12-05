@@ -71,10 +71,21 @@ public class ProductController {
   }
 
   @DeleteMapping("/product/{productId}/delete")
-  public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long productId) {    try {
+  public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long productId) {
+    try {
       productService.deleteProductById(productId);
       return ResponseEntity.ok(new ApiResponse("Delete product success!", productId));
     } catch (Exception e) {
+      return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+    }
+  }
+
+  @GetMapping("/product/{brand}")
+  public ResponseEntity<ApiResponse> findProductByBrand(@PathVariable String brand) {
+    try{
+      List<Product> products = productService.getProductsByBrand(brand);
+      return ResponseEntity.ok(new ApiResponse("Found",products));
+    } catch(Exception e){
       return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
     }
   }
