@@ -80,7 +80,7 @@ public class ProductController {
     }
   }
 
-  @GetMapping("/product/{brand}")
+  @GetMapping("/product/{brand}/fetch")
   public ResponseEntity<ApiResponse> findProductByBrand(@PathVariable String brand) {
     try{
       List<Product> products = productService.getProductsByBrand(brand);
