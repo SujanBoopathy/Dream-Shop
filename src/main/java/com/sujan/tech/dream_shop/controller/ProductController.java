@@ -89,5 +89,10 @@ public class ProductController {
       return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
     }
   }
-  
+
+  @GetMapping
+  public ResponseEntity<ApiReponse> findProductByBrandAndName(String brand,String name){
+    List<Product> products = productService.getProductByBrandAndName(brand,name);
+    return products;
+  }
 }
