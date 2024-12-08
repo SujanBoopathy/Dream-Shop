@@ -93,6 +93,6 @@ public class ProductController {
   @GetMapping
   public ResponseEntity<ApiReponse> findProductByBrandAndName(String brand,String name){
     List<Product> products = productService.getProductByBrandAndName(brand,name);
-    return products;
+    return ResponseEntity.ok(new ApiResponse("Found",products));
   }
 }
