@@ -90,7 +90,7 @@ public class ProductController {
     }
   }
 
-  @GetMapping
+  @GetMapping("/product/{brand}/fetch-by-name/{name}")
   public ResponseEntity<ApiReponse> findProductByBrandAndName(String brand,String name){
     try{
       List<Product> products = productService.getProductByBrandAndName(brand,name);
