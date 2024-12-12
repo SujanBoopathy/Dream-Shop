@@ -91,13 +91,12 @@ public class ProductController {
   }
 
   @GetMapping("/products/by/brand-and-name")
-  public ResponseEntity<ApiReponse> findProductByBrandAndName(@PathVariable String brand,@PathVariable String name){
+  public ResponseEntity<ApiResponse> findProductByBrandAndName(@PathVariable String brand,@PathVariable String name){
     try{
       List<Product> products = productService.getProductByBrandAndName(brand,name);
       return ResponseEntity.ok(new ApiResponse("Found",products));
     } catch(Exception e) {
       return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
     }
-    
   }
 }
