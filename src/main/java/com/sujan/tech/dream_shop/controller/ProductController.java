@@ -60,6 +60,9 @@ public class ProductController {
     }
   }
 
+  @GetMapping
+  public ResponseEntity<ApiResponse> getProductsByCategoryAndBrand(){}
+
   @PutMapping("/product/{productId}/update")
   public  ResponseEntity<ApiResponse> updateProduct(@RequestBody ProductUpdateRequest request, @PathVariable Long productId) {
     try {
