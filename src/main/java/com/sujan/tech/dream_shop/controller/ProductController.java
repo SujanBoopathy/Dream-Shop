@@ -61,7 +61,14 @@ public class ProductController {
   }
 
   @GetMapping
-  public ResponseEntity<ApiResponse> getProductsByCategoryAndBrand(){}
+  public ResponseEntity<ApiResponse> getProductsByCategoryAndBrand(@PathVariable category,@PathVariable brand){
+    try{
+      productService.getProductsByCategoryAndBrand(category,brand);
+    }
+    catch(Exception){
+      e.printStrackTrace();
+    }
+  }
 
   @PutMapping("/product/{productId}/update")
   public  ResponseEntity<ApiResponse> updateProduct(@RequestBody ProductUpdateRequest request, @PathVariable Long productId) {
