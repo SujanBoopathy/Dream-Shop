@@ -60,13 +60,14 @@ public class ProductController {
     }
   }
 
-  @GetMapping
+  @GetMapping("/products/by-category-and-brand")
   public ResponseEntity<ApiResponse> getProductsByCategoryAndBrand(@PathVariable category,@PathVariable brand){
     try{
-      productService.getProductsByCategoryAndBrand(category,brand);
+      List<Product> products = productService.getProductsByCategoryAndBrand(category,brand);
+      return ResponseEntity.ok(new ApiResponse("Found",products));
     }
     catch(Exception){
-      e.printStrackTrace();
+     return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
     }
   }
 
