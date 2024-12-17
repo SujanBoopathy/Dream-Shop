@@ -120,4 +120,10 @@ public class ProductController {
           return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
       }
   }
+
+  @GetMapping("/products/by/brand-and-name")
+    public ResponseEntity<ApiResponse> getProductByBrandAndName(@RequestParam String brandName, @RequestParam String productName) {
+      List<Product> products = productService.getProductsByBrandAndName(brandName, productName);
+      return  ResponseEntity.ok(new ApiResponse("success", convertedProducts));       
+    }
 }
