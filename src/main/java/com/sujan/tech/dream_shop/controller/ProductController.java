@@ -114,7 +114,7 @@ public class ProductController {
   public ResponseEntity<ApiResponse> findProductByCategory(@PathVariable String category) {
       try {
           List<Product> products = productService.getProductsByCategory(category);
-          if (products.isEmpty()) {
+          if (products != null && products.isEmpty()) {
               return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No products found ", null));
           }
           List<ProductDto> convertedProducts = productService.getConvertedProducts(products);
