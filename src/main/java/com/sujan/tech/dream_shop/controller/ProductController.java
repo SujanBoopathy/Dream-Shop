@@ -1,5 +1,6 @@
 package com.sujan.tech.dream_shop.controller;
 
+import com.sujan.tech.dream_shop.dto.ProductDto;
 import com.sujan.tech.dream_shop.model.Category;
 import com.sujan.tech.dream_shop.model.Product;
 import com.sujan.tech.dream_shop.request.AddProductRequest;
@@ -61,12 +62,12 @@ public class ProductController {
   }
 
   @GetMapping("/products/by-category-and-brand")
-  public ResponseEntity<ApiResponse> getProductsByCategoryAndBrand(@PathVariable category,@PathVariable brand){
+  public ResponseEntity<ApiResponse> getProductsByCategoryAndBrand(@PathVariable String category,@PathVariable String brand){
     try{
       List<Product> products = productService.getProductsByCategoryAndBrand(category,brand);
       return ResponseEntity.ok(new ApiResponse("Found",products));
     }
-    catch(Exception){
+    catch(Exception e){
      return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
     }
   }
@@ -117,8 +118,8 @@ public class ProductController {
           if (products != null && products.isEmpty()) {
               return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No products found ", null));
           }
-          List<ProductDto> convertedProducts = productService.getConvertedProducts(products);
-          return  ResponseEntity.ok(new ApiResponse("success", convertedProducts));
+          //List<ProductDto> convertedProducts = productService.getConvertedProducts(products);
+          return  ResponseEntity.ok(new ApiResponse("success", products));
       } catch (Exception e) {
           return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
       }
@@ -141,8 +142,8 @@ public class ProductController {
           if (products.isEmpty()) {
               return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No products found ", null));
           }
-          List<ProductDto> convertedProducts = productService.getConvertedProducts(products);
-          return  ResponseEntity.ok(new ApiResponse("success", convertedProducts));
+          //List<ProductDto> convertedProducts = productService.getConvertedProducts(products);
+          return  ResponseEntity.ok(new ApiResponse("success", products));
       } catch (Exception e) {
           return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse(e.getMessage(), null));
       }

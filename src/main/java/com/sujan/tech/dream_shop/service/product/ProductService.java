@@ -1,13 +1,18 @@
 package com.sujan.tech.dream_shop.service.product;
 
+import com.sujan.tech.dream_shop.dto.ImageDto;
+import com.sujan.tech.dream_shop.dto.ProductDto;
 import com.sujan.tech.dream_shop.exception.ProductNotFoundException;
 import com.sujan.tech.dream_shop.model.Category;
+import com.sujan.tech.dream_shop.model.Image;
 import com.sujan.tech.dream_shop.model.Product;
 import com.sujan.tech.dream_shop.repository.CategoryRepository;
+import com.sujan.tech.dream_shop.repository.ImageRepository;
 import com.sujan.tech.dream_shop.repository.ProductRepository;
 import com.sujan.tech.dream_shop.request.AddProductRequest;
 import com.sujan.tech.dream_shop.request.ProductUpdateRequest;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +23,9 @@ import java.util.Optional;
 public class ProductService implements IProductService{
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final ModelMapper modelMapper;
+    private final ImageRepository imageRepository;
+
     @Override
     public Product addProduct(AddProductRequest request) {
         //check if category is found in the DB
@@ -112,5 +120,15 @@ public class ProductService implements IProductService{
     @Override
     public Long countProductsByBrandAndName(String brand, String name) {
         return productRepository.countByBrandAndName(brand,name);
+    }
+
+    public ProductDto convertToDto(Product product) {
+        ProductDto productDto = modelMapper.map(product,ProductDto.class);
+        List<Image> images = imageRepository.findByProductId(product.getId());
+        List<ImageDto> imageDtos = images.stream()
+                .map(image -> modelMapper.map(image, ImageDto.class))
+                .toList();
+        productDto.setImages(imageDtos);
+        return productDto;
     }
 }
