@@ -122,6 +122,7 @@ public class ProductService implements IProductService{
         return productRepository.countByBrandAndName(brand,name);
     }
 
+    @Override
     public ProductDto convertToDto(Product product) {
         ProductDto productDto = modelMapper.map(product,ProductDto.class);
         List<Image> images = imageRepository.findByProductId(product.getId());
@@ -130,5 +131,10 @@ public class ProductService implements IProductService{
                 .toList();
         productDto.setImages(imageDtos);
         return productDto;
+    }
+
+    @Override
+    public List<ProductDto> getConvertedProducts(List<Product> products) {
+        return products.stream().map(this::convertToDto).toList();
     }
 }

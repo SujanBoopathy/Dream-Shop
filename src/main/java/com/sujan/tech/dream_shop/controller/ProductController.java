@@ -26,7 +26,8 @@ public class ProductController {
   @GetMapping("/all")
   public ResponseEntity<ApiResponse> getAllProducts(){
     List<Product> products = productService.getAllProducts();
-    return ResponseEntity.ok(new ApiResponse("success",products));
+    List<ProductDto> productDtos = productService.getConvertedProducts(products);
+    return ResponseEntity.ok(new ApiResponse("success",productDtos));
   }
 
   @GetMapping("product/{id}")

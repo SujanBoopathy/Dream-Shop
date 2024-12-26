@@ -1,5 +1,6 @@
 package com.sujan.tech.dream_shop.service.product;
 
+import com.sujan.tech.dream_shop.dto.ProductDto;
 import com.sujan.tech.dream_shop.exception.ProductNotFoundException;
 import com.sujan.tech.dream_shop.model.Product;
 import com.sujan.tech.dream_shop.request.AddProductRequest;
@@ -19,7 +20,8 @@ public interface IProductService {
     List<Product> getProductsByName(String productName);
     List<Product> getProductsByBrandAndName(String brand,String productName);
     Long countProductsByBrandAndName(String brand,String name);
-
+    ProductDto convertToDto(Product product);
+    List<ProductDto> getConvertedProducts(List<Product> products);
 
 
 }
