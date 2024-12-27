@@ -34,7 +34,8 @@ public class ProductController {
   public ResponseEntity<ApiResponse> getProductById(@PathVariable Long id){
     try{
       Product product = productService.getProductById(id);
-      return ResponseEntity.ok(new ApiResponse("sucess",product));
+      ProductDto productDto = productService.convertToDto(product);
+      return ResponseEntity.ok(new ApiResponse("sucess",productDto));
     } catch(Exception e){
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body(
               new ApiResponse("Invalid input",e.getMessage())
@@ -66,7 +67,8 @@ public class ProductController {
   public ResponseEntity<ApiResponse> getProductsByCategoryAndBrand(@PathVariable String category,@PathVariable String brand){
     try{
       List<Product> products = productService.getProductsByCategoryAndBrand(category,brand);
-      return ResponseEntity.ok(new ApiResponse("Found",products));
+        List<ProductDto> productDtos = productService.getConvertedProducts(products);
+      return ResponseEntity.ok(new ApiResponse("Found",productDtos));
     }
     catch(Exception e){
      return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
