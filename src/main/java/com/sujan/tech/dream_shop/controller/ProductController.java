@@ -44,10 +44,11 @@ public class ProductController {
   }
 
   @GetMapping("/{name}/product")
-  public ResponseEntity<ApiResponse> getCategoryByName(@PathVariable String name){
+  public ResponseEntity<ApiResponse> getProductByName(@PathVariable String name){
     try{
       List<Product> products = productService.getProductsByName(name);
-      return ResponseEntity.ok(new ApiResponse("Found",products));
+       List<ProductDto> productDtos = productService.getConvertedProducts(products);
+      return ResponseEntity.ok(new ApiResponse("Found",productDtos));
     } catch(Exception e){
       return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(),null));
     }
