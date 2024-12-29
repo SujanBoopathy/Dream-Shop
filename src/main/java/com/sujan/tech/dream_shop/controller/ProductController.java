@@ -100,7 +100,8 @@ public class ProductController {
   public ResponseEntity<ApiResponse> findProductByBrand(@PathVariable String brand) {
     try{
       List<Product> products = productService.getProductsByBrand(brand);
-      return ResponseEntity.ok(new ApiResponse("Found",products));
+      List<ProductDto> productDtos = productService.getConvertedProducts(products);
+      return ResponseEntity.ok(new ApiResponse("Found",productDtos));
     } catch(Exception e){
       return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
     }
