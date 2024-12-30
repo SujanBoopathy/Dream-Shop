@@ -68,7 +68,7 @@ public class ProductController {
   public ResponseEntity<ApiResponse> getProductsByCategoryAndBrand(@PathVariable String category,@PathVariable String brand){
     try{
       List<Product> products = productService.getProductsByCategoryAndBrand(category,brand);
-        List<ProductDto> productDtos = productService.getConvertedProducts(products);
+      List<ProductDto> productDtos = productService.getConvertedProducts(products);
       return ResponseEntity.ok(new ApiResponse("Found",productDtos));
     }
     catch(Exception e){
@@ -110,8 +110,9 @@ public class ProductController {
   @GetMapping("/products/by/brand-and-name")
   public ResponseEntity<ApiResponse> findProductByBrandAndName(@PathVariable String brand,@PathVariable String name){
     try{
-      List<Product> products = productService.getProductsByBrandAndName(brand,name);
-      return ResponseEntity.ok(new ApiResponse("Found",products));
+        List<Product> products = productService.getProductsByBrandAndName(brand,name);
+        List<ProductDto> productDtos = productService.getConvertedProducts(products);
+        return ResponseEntity.ok(new ApiResponse("Found",productDtos));
     } catch(Exception e) {
       return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
     }
