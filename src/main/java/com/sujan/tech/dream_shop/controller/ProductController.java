@@ -120,12 +120,12 @@ public class ProductController {
   @GetMapping("/product/{category}/all/products")
   public ResponseEntity<ApiResponse> findProductByCategory(@PathVariable String category) {
       try {
-          List<Product> products = productService.getProductsByCategory(category);
+          List<Product> products = productService.getProductsByCategory(category);           
           if (products != null && products.isEmpty()) {
               return ResponseEntity.status(NOT_FOUND).body(new ApiResponse("No products found ", null));
           }
-          //List<ProductDto> convertedProducts = productService.getConvertedProducts(products);
-          return  ResponseEntity.ok(new ApiResponse("success", products));
+          List<ProductDto> productDtos = productService.getConvertedProducts(products);
+          return  ResponseEntity.ok(new ApiResponse("success", productDtos));
       } catch (Exception e) {
           return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
       }
