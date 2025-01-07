@@ -21,7 +21,7 @@ public class Cart {
     private BigDecimal totalAmount;
 
     @OneToMany(mappedBy = "cart",cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<CartItem> cartItems;
+    private Set<CartItem> items;
 
     
     public void addItem(CartItem item) {
