@@ -9,6 +9,8 @@ import com.sujan.tech.dream_shop.service.product.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+
 @Service
 @RequiredArgsConstructor
 public class CartItemService implements ICartItemService{
@@ -67,6 +69,12 @@ public class CartItemService implements ICartItemService{
                     item.setUnitPrice(item.getProduct().getPrice());
                     item.setTotalPrice();
                 });
+        BigDecimal totalAmount = cart.getItems()
+                .stream().map(CartItem ::getTotalPrice)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        cart.setTotalAmount(totalAmount);
+        cartRepository.save(cart);
     }
 
     @Override
@@ -75,6 +83,6 @@ public class CartItemService implements ICartItemService{
         return  cart.getItems()
                 .stream()
                 .filter(item -> item.getProduct().getId().equals(productId))
-                .findFirst().orElseThrow(() -> new ResourceNotFoundException("Item not found"));
+                .findFirst().orElseThrow(() -> new RuntimeException("Item not found"));
     }
 }
