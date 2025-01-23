@@ -5,10 +5,7 @@ import com.sujan.tech.dream_shop.service.cart.ICartItemService;
 import com.sujan.tech.dream_shop.service.cart.ICartService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 
@@ -29,6 +26,16 @@ public class CartItemController {
             }
             cartItemService.addItemToCart(cartId, productId, quantity);
             return ResponseEntity.ok(new ApiResponse("Add Item Success", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+        }
+    }
+
+    @DeleteMapping("/cart/{cartId}/item/{itemId}/remove")
+    public ResponseEntity<ApiResponse> removeItemFromCart(@PathVariable Long cartId, @PathVariable Long itemId) {
+        try {
+            cartItemService.removeItemFromCart(cartId, itemId);
+            return ResponseEntity.ok(new ApiResponse("Remove Item Success", null));
         } catch (Exception e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }
