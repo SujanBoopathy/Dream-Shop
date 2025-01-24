@@ -40,4 +40,17 @@ public class CartItemController {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
         }
     }
+
+    @PutMapping("/cart/{cartId}/item/{itemId}/update")
+    public  ResponseEntity<ApiResponse> updateItemQuantity(@PathVariable Long cartId,
+                                                           @PathVariable Long itemId,
+                                                           @RequestParam Integer quantity) {
+        try {
+            cartItemService.updateItemQuantity(cartId, itemId, quantity);
+            return ResponseEntity.ok(new ApiResponse("Update Item Success", null));
+        } catch (Exception e) {
+            return ResponseEntity.status(NOT_FOUND).body(new ApiResponse(e.getMessage(), null));
+        }
+
+    }
 }
