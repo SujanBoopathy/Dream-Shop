@@ -67,12 +67,18 @@ public class OrderService implements IOrderService{
     }
 
     @Override
-    public OrderDto getOrder(Long orderId) {
-        return null;
+    public OrderDto getOrder(Long orderId) throws Exception {
+        return orderRepository.findById(orderId)
+                .map(this :: convertToDto)
+                .orElseThrow(() -> new Exception("Order not found"));
+    }
+    private OrderDto convertToDto(Order order) {
+        return modelMapper.map(order, OrderDto.class);
     }
 
     @Override
     public List<OrderDto> getUserOrders(Long userId) {
         return List.of();
     }
+
 }
