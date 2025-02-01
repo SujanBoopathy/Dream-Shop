@@ -78,7 +78,8 @@ public class OrderService implements IOrderService{
 
     @Override
     public List<OrderDto> getUserOrders(Long userId) {
-        return List.of();
+        List<Order> orders = orderRepository.findByUserId(userId);
+        return  orders.stream().map(this :: convertToDto).toList();
     }
 
 }
