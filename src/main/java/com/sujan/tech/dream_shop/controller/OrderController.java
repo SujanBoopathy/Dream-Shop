@@ -1,15 +1,13 @@
 package com.sujan.tech.dream_shop.controller;
 
+import com.sujan.tech.dream_shop.dto.OrderDto;
 import com.sujan.tech.dream_shop.model.Order;
 import com.sujan.tech.dream_shop.respone.ApiResponse;
 import com.sujan.tech.dream_shop.service.order.IOrderService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
@@ -24,6 +22,16 @@ public class OrderController {
             return ResponseEntity.ok(new ApiResponse("Item Order Success!", order));
         } catch (Exception e) {
             return  ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new ApiResponse("Error Occured!", e.getMessage()));
+        }
+    }
+
+    @GetMapping("/{orderId}/order")
+    public ResponseEntity<ApiResponse> getOrderById(@PathVariable Long orderId) {
+        try {
+            OrderDto order = orderService.getOrder(orderId);
+            return ResponseEntity.ok(new ApiResponse("Item Order Success!", order));
+        } catch (Exception e) {
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Oops!", e));
         }
     }
 }
