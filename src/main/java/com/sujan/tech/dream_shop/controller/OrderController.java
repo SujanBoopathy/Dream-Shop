@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequiredArgsConstructor
 @RestController
 @RequestMapping("${api.prefix}/orders")
@@ -32,6 +34,16 @@ public class OrderController {
             return ResponseEntity.ok(new ApiResponse("Item Order Success!", order));
         } catch (Exception e) {
             return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Oops!", e));
+        }
+    }
+
+    @GetMapping("/{userId}/order")
+    public ResponseEntity<ApiResponse> getUserOrders(@PathVariable Long userId) {
+        try {
+            List<OrderDto> order = orderService.getUserOrders(userId);
+            return ResponseEntity.ok(new ApiResponse("Item Order Success!", order));
+        } catch (Exception e) {
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ApiResponse("Oops!", e.getMessage()));
         }
     }
 }
