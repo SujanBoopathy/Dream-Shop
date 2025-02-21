@@ -41,4 +41,9 @@ public class UserService implements IUserService {
             throw new ResourceNotFoundException("User not found!");
         });
     }
+
+    @Override
+    public UserDto convertUserToDto(User user) {
+        return modelMapper.map(user, UserDto.class);
+    }
 }
