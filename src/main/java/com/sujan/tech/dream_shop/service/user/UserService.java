@@ -26,6 +26,20 @@ public class UserService implements IUserService {
     }
 
     @Override
+    public User createUser(CreateUserRequest request) {
+        return  Optional.of(request)
+                .filter(user -> !userRepository.existsByEmail(request.getEmail()))
+                .map(req -> {
+                    User user = new User();
+                    user.setEmail(request.getEmail());
+                    user.setPassword(request.getPassword());
+                    user.setFirstName(request.getFirstName());
+                    user.setLastName(request.getLastName());
+                    return  userRepository.save(user);
+                }) ;
+    }
+
+    @Override
     public User updateUser(UserUpdateRequest request, Long userId) {
         return  userRepository.findById(userId).map(existingUser ->{
             existingUser.setFirstName(request.getFirstName());
