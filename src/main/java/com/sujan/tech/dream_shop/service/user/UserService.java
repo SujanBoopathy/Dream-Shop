@@ -36,7 +36,7 @@ public class UserService implements IUserService {
                     user.setFirstName(request.getFirstName());
                     user.setLastName(request.getLastName());
                     return  userRepository.save(user);
-                }) ;
+                }).orElseThrow(()-> new Exception("user not created"));
     }
 
     @Override
