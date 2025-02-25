@@ -1,15 +1,9 @@
 package com.sujan.tech.dream_shop.service.user;
 
-import com.dailycodework.dreamshops.dto.UserDto;
-import com.dailycodework.dreamshops.exceptions.AlreadyExistsException;
-import com.dailycodework.dreamshops.exceptions.ResourceNotFoundException;
-import com.dailycodework.dreamshops.model.User;
-import com.dailycodework.dreamshops.repository.UserRepository;
-import com.dailycodework.dreamshops.request.CreateUserRequest;
-import com.dailycodework.dreamshops.request.UserUpdateRequest;
-import lombok.RequiredArgsConstructor;
+
+import com.sujan.tech.dream_shop.model.User;
+import com.sujan.tech.dream_shop.repository.UserRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
@@ -45,14 +39,14 @@ public class UserService implements IUserService {
             existingUser.setFirstName(request.getFirstName());
             existingUser.setLastName(request.getLastName());
             return userRepository.save(existingUser);
-        }).orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+        }).orElseThrow(() -> new Exception("User not found!"));
 
     }
 
     @Override
     public void deleteUser(Long userId) {
         userRepository.findById(userId).ifPresentOrElse(userRepository :: delete, () ->{
-            throw new ResourceNotFoundException("User not found!");
+            throw new Exception("User not found!");
         });
     }
 
