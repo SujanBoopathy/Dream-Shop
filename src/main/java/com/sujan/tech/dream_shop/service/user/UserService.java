@@ -3,6 +3,7 @@ package com.sujan.tech.dream_shop.service.user;
 
 import com.sujan.tech.dream_shop.model.User;
 import com.sujan.tech.dream_shop.repository.UserRepository;
+import com.sujan.tech.dream_shop.request.CreateUserRequest;
 import org.modelmapper.ModelMapper;
 
 import java.util.Optional;
