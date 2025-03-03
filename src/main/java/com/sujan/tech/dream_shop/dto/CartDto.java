@@ -1,4 +1,4 @@
-
+package com.sujan.tech.dream_shop.dto;
 import lombok.Data;
 
 import java.math.BigDecimal;
