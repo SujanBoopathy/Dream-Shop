@@ -1,6 +1,7 @@
 package com.sujan.tech.dream_shop.service.user;
 
 
+import com.sujan.tech.dream_shop.dto.UserDto;
 import com.sujan.tech.dream_shop.model.User;
 import com.sujan.tech.dream_shop.repository.UserRepository;
 import com.sujan.tech.dream_shop.request.CreateUserRequest;
@@ -16,13 +17,13 @@ public class UserService implements IUserService {
     private final ModelMapper modelMapper;
    
     @Override
-    public User getUserById(Long userId) {
+    public User getUserById(Long userId) throws Exception {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new Exception("User not found!"));
     }
 
     @Override
-    public User createUser(CreateUserRequest request) {
+    public User createUser(CreateUserRequest request) throws Exception {
         return  Optional.of(request)
                 .filter(user -> !userRepository.existsByEmail(request.getEmail()))
                 .map(req -> {
@@ -36,7 +37,7 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public User updateUser(UserUpdateRequest request, Long userId) {
+    public User updateUser(UserUpdateRequest request, Long userId) throws Exception {
         return  userRepository.findById(userId).map(existingUser ->{
             existingUser.setFirstName(request.getFirstName());
             existingUser.setLastName(request.getLastName());
@@ -48,7 +49,11 @@ public class UserService implements IUserService {
     @Override
     public void deleteUser(Long userId) {
         userRepository.findById(userId).ifPresentOrElse(userRepository :: delete, () ->{
-            throw new Exception("User not found!");
+            try {
+                throw new Exception("User not found!");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
         });
     }
 
