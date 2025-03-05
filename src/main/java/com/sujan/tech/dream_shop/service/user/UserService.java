@@ -6,7 +6,9 @@ import com.sujan.tech.dream_shop.model.User;
 import com.sujan.tech.dream_shop.repository.UserRepository;
 import com.sujan.tech.dream_shop.request.CreateUserRequest;
 import com.sujan.tech.dream_shop.request.UserUpdateRequest;
+import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
